@@ -25,6 +25,6 @@ Saya seorang Business Analyst yang berfokus pada analisis proses bisnis, pengump
 - **Overview / Impact:**
   Sistem CRM ini membantu tim sales dan manajemen dealer memonitor performa salespeople secara real-time, mempermudah reporting, dan meningkatkan efisiensi evaluasi kinerja. Semua fitur dirancang dan dikembangkan sendiri mulai dari requirement hingga implementasi.
 
-*(File pendukung: SRS.pdf, Flowchart.png, UserStories.docx di folder Projects/CRM_Monitoring)*
+
   
     
