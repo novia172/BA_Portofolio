@@ -1,1 +1,152 @@
+ 
+SPECIFICATION PROGRAM
+ 
+Document No.
+ 
+Platform
+Web
+Project Name
+CRM
+Module Name
+Monitoring Performance Dealer
+
+
+
+1.       Overview
+Modul ini digunakan untuk monitoring performance dealer agar proses follow up dijalankan dengan baik.
+2.       Flow
+2.1      Flow untuk get data berdasarkan filter
+
+2.1    Flow untuk get file excel
+ 
+3.       Technical Specification
+Development
+Software Application
+PHP Language
+Framework
+CakePHP 3.0
+UI
+Bootstrap 3.0
+Database
+MySql (192.168.1.48 / MAINDEALER)   
+Server
+192.168.12.210
+
+ 
+Live
+Software Application
+ 
+Framework
+ 
+UI
+ 
+Database
+ 
+Server
+
+
+
+
+
+
+ERD
+
+4.       Display
+
+
+5.       Query
+5.1		Query untuk get data leads dan status follow-up
+SELECT
+	pd.assign_dlr, d.nm_dlr  AS dealer, 
+	COUNT(DISTINCT lls.leads_id) AS leads,
+	SUM(CASE WHEN lls.stage_id IN (5, 6) THEN 1 ELSE 0 END) AS workload,
+	
+SUM(CASE WHEN lls.stage_id IN (10, 11, 12) OR lls.stage_id IS NULL THEN 1 ELSE 0 END) AS deal,
+	SUM(CASE WHEN lls.stage_id = 9 THEN 1 ELSE 0 END) AS not_deal,
+(SUM(CASE WHEN lls.stage_id IN (5, 6) THEN 1 ELSE 0 END) * 100.0 /   COUNT(DISTINCT lls.leads_id)) AS persen_workload,
+(SUM(CASE WHEN lls.stage_id IN (8, 9, 10, 11, 12) OR lls.stage_id IS NULL THEN 1 ELSE 0 END) * 100.0 / COUNT(DISTINCT lls.leads_id)) AS persen_contacted,
+	CASEHEN (SUM(CASE WHEN lls.stage_id IN (8, 10) OR lls.stage_id IS NULL THEN 1 ELSE 0 END) * 100.0 /
+SUM(CASE WHEN lls.stage_id IN (8, 9, 10, 11, 12) OR lls.stage_id IS NULL THEN 1 ELSE 0 END))
+   	ELSE 0
+	END AS persen_pending,
+	CASE
+WHEN SUM(CASE WHEN lls.stage_id IN (8, 9, 10, 11, 12) OR lls.stage_id IS NULL THEN 1 ELSE 0 END) > 0
+THEN (SUM(CASE WHEN lls.stage_id IN (10, 11, 12) OR lls.stage_id IS NULL THEN 1 ELSE 0 END) * 100.0 /
+
+(SUM(CASE WHEN lls.stage_id IN (10, 11, 12) OR lls.stage_id IS NULL THEN 1 ELSE 0 END) * 100.0 / COUNT(DISTINCT lls.leads_id)) AS persen_conversion_rate
+FROM (
+      	SELECT ls.leads_id, ls.stage_id, ls.date_log
+	  	FROM log_stage ls
+	  	JOIN (
+    	     	SELECT leads_id, MAX(date_log) AS latest_date
+   	      	FROM log_stage
+    	     	GROUP BY leads_id
+	  	) latest
+      	ON ls.leads_id = latest.leads_id AND ls.date_log = latest.latest_date
+) lls
+INNER JOIN prospect_data pd ON pd.id = lls.leads_id
+JOIN dealers d ON pd.assign_dlr = d.no_astra 
+WHERE
+      		pd.desc_event = 'JULI 2023'
+	  	AND pd.assign_dlr = '01000'
+	  	AND pd.cust_act_date >= '2023-07-21'
+	  	AND pd.cust_act_date <= '2023-08-01'
+	  	AND pd.source_data = '29'
+	  	AND pd.platform_data = 'M1'
+GROUP BY
+      	pd.assign_dlr,
+       d.nm_dlr
+
+
+5.2       Query untuk get data berdasarkan filter event
+
+
+      select me.desc_event, me.nama_event
+      from mst_event me
+
+
+5.3       Query untuk get data berdasarkan filter Dealer
+
+
+	      select d.no_astra, d.nm_dlr
+      from dealers d
+
+
+5.4       Query untuk get data berdasarkan filter Source Data
+      select ms.kd_srcdata, ms.srcdata
+      from mst_srcdata ms
+
+
+5.5 	      Query untuk get data berdasarkan filter Platform Data
+
+
+	      select mp.kd_platformdata, mp.platformdata
+      from mst_platformdata mp
+
+
+
+
+
+
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+
+
 
