@@ -13,7 +13,7 @@ Saya seorang Business Analyst yang berfokus pada analisis proses bisnis, pengump
 ## Projects
 ### 1. CRM Monitoring Performance Sales & Dealer
 - **Peran:** Business Analyst & Full-Stack Developer
-- **Waktu:** Januari 2025 – Maret 2025
+- **Waktu:** November 2024 – Maret 2025
 - **Tools / Teknologi:** CakePHP 4, PHP, MySQL/PostgreSQL, DataTables, Excel Export, Select2
 - **Tugas & Deliverables:**
   - Mengumpulkan requirement dari tim sales dan dealer
